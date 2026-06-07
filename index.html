@@ -1,1 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Constructer Cusco | Verificación RNE Completa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
+    body {
+      background: #F4F6FB;
+      font-family: 'Inter', sans-serif;
+      color: #1A2C3E;
+      line-height: 1.4;
+    }
+
+    .app-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #F4F6FB;
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0,0,0,0.05);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0B2F4E 0%, #134B73 100%);
+      padding: 28px 20px 20px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: rgba(240, 123, 15, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(240, 123, 15, 0.85);
+      backdrop-filter: blur(4px);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: white;
+      margin-bottom: 16px;
+      font-family: 'Manrope', sans-serif;
+    }
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      font-weight: 500;
+      max-width: 85%;
+    }
+    .hero-quote {
+      margin-top: 18px;
+      background: rgba(255,255,255,0.08);
+      border-left: 3px solid #F07B0F;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .tabs-wrapper {
+      padding: 0 16px;
+      margin-top: -18px;
+      position: relative;
+      z-index: 3;
+    }
+    .tabs {
+      background: white;
+      border-radius: 60px;
+      display: flex;
+      gap: 4px;
+      padding: 6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 40px;
+      background: transparent;
+      color: #5A6E85;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-family: 'Manrope', sans-serif;
+      letter-spacing: -0.2px;
+    }
+    .tab.on {
+      background: #0B2F4E;
+      color: white;
+      box-shadow: 0 2px 8px rgba(11,47,78,0.2);
+    }
+
+    .main-content {
+      padding: 20px 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 28px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.08);
+    }
+    .card-header {
+      padding: 18px 18px 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid #EDF2F7;
+    }
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      background: #FEF5E8;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .card-title-box {
+      flex: 1;
+    }
+    .card-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: #0B2F4E;
+      letter-spacing: -0.3px;
+    }
+    .card-question {
+      font-size: 13px;
+      color: #5B6F8C;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+    .card-body {
+      padding: 18px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+    .input-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2C5A7A;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .input-num {
+      width: 100%;
+      padding: 16px;
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'Manrope', sans-serif;
+      text-align: center;
+      background: #F8FAFE;
+      border: 2px solid #E2E8F0;
+      border-radius: 28px;
+      color: #0B2F4E;
+      outline: none;
+      transition: all 0.2s;
+      letter-spacing: -0.5px;
+    }
+    .input-num:focus {
+      border-color: #F07B0F;
+      box-shadow: 0 0 0 3px rgba(240,123,15,0.1);
+    }
+    .input-num.invalid {
+      border-color: #DC2626;
+      background: #FEF2F2;
+    }
+    .input-hint {
+      font-size: 11px;
+      font-weight: 600;
+      color: #7E8DA0;
+      text-align: center;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .ref-badge {
+      background: #F1F5F9;
+      padding: 4px 10px;
+      border-radius: 40px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #1E4A76;
+    }
+    .error-msg {
+      color: #DC2626;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 6px;
+      text-align: center;
+      display: none;
+    }
+    .error-msg.show {
+      display: block;
+    }
+
+    .result-box {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 20px;
+      display: none;
+      animation: fadeSlide 0.25s ease;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-box.show {
+      display: block;
+    }
+    .result-box.ok {
+      background: #EEFBF2;
+      border-left: 5px solid #1E7B48;
+    }
+    .result-box.mal {
+      background: #FEF3F2;
+      border-left: 5px solid #B91C1C;
+    }
+    .result-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .result-img {
+      font-size: 28px;
+    }
+    .result-titulo {
+      font-weight: 800;
+      font-size: 15px;
+      font-family: 'Manrope', sans-serif;
+    }
+    .result-box.ok .result-titulo { color: #14532D; }
+    .result-box.mal .result-titulo { color: #991B1B; }
+    .result-desc {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .calculo-paso {
+      background: rgba(0,0,0,0.03);
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-family: monospace;
+      margin: 8px 0;
+      color: #2C5A7A;
+    }
+    .referencia {
+      font-size: 10px;
+      font-weight: 600;
+      color: #6B7280;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+    .recomendacion {
+      margin-top: 12px;
+      background: #FFF4E8;
+      padding: 10px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #C2410C;
+      border-left: 3px solid #F07B0F;
+    }
+    .analogy {
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #F07B0F;
+      background: #FFF4E8;
+      padding: 8px 12px;
+      border-radius: 16px;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      padding: 16px;
+      background: white;
+      border-radius: 24px;
+      border: 1px solid #E9EEF5;
+    }
+    .footer-note p {
+      font-size: 11px;
+      font-weight: 500;
+      color: #5A6E85;
+      line-height: 1.5;
+    }
+    .legal {
+      font-size: 9px;
+      color: #9CA3AF;
+      text-align: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #E5E7EB;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="hero">
+    <span class="hero-badge">🏗️ PROPÓSITO > DINERO</span>
+    <h1>Constructer<br>Cusco</h1>
+    <p>Verifica tu construcción con la norma peruana RNE</p>
+    <div class="hero-quote">
+      💡 "Construir bien es un acto de persistencia y propósito. Cada detalle verificado es un riesgo menos."
+    </div>
+  </div>
+
+  <div class="tabs-wrapper">
+    <div class="tabs">
+      <div class="tab on" data-tab="e030">🌋 SISMO</div>
+      <div class="tab" data-tab="e050">🪨 SUELOS</div>
+      <div class="tab" data-tab="e060">🏛️ CONCRETO</div>
+      <div class="tab" data-tab="e070">🧱 MUROS</div>
+      <div class="tab" data-tab="e080">🏠 ADOBE</div>
+    </div>
+  </div>
+
+  <div class="main-content" id="mainContent"></div>
+
+  <div class="footer-note">
+    <p>🔐 Construir con propósito es más rentable que construir con miedo.<br>Basado en RNE Perú + filosofía de ejecución centrada en el propósito.</p>
+    <div class="legal">
+      ⚖️ <strong>AVISO LEGAL:</strong> Esta aplicación es una herramienta de apoyo y no reemplaza la revisión profesional de un ingeniero civil colegiado. Los resultados son orientativos. Siempre consulte con un especialista antes de tomar decisiones constructivas.
+    </div>
+  </div>
+</div>
+
+<script>
+  // ======================== DATOS COMPLETOS DESDE EXCEL ========================
+
+  const normasData = {
+    e030: {
+      code: "E-030", name: "Norma Sismorresistente", sub: "Diseño y verificación antisísmica", articulo: "Art. 15-18",
+      items: [
+        { problema: "Junta sísmica", campo1: "Distancia al vecino (cm)", campo2: "Altura del edificio (m)", formula: (v1,v2) => v1 >= Math.max(0.006 * v2, 0.03), ok: "✅ ¡Bien! Hay espacio suficiente", mal: "❌ ¡Cuidado! Muy pegado", explicacion: "Evita choque entre edificios en sismo", recomendacion: "Deja al menos el 0.6% de la altura o 3 cm mínimo", refArticulo: "Art. 15", getCalculo: (v1,v2) => `Cálculo: Distancia = ${v1} cm | Mínimo requerido = max(0.006×${v2}, 0.03) = ${Math.max(0.006 * v2, 0.03).toFixed(2)} cm | ${v1 >= Math.max(0.006 * v2, 0.03) ? v1 + ' ≥ ' + Math.max(0.006 * v2, 0.03).toFixed(2) : v1 + ' < ' + Math.max(0.006 * v2, 0.03).toFixed(2)}` },
+        { problema: "Piso blando", campo1: "Área muros 1er piso (m²)", campo2: "Área muros piso superior (m²)", formula: (v1,v2) => (v1 / v2) >= 0.7, ok: "✅ Primer piso firme", mal: "❌ ¡Alerta! Piso blando", explicacion: "Base débil falla primero en sismo", recomendacion: "Refuerza el primer piso con más muros o placas", refArticulo: "Art. 16", getCalculo: (v1,v2) => `Cálculo: Relación = ${v1} / ${v2} = ${(v1/v2).toFixed(2)} | Mínimo requerido = 0.70 | ${(v1/v2) >= 0.7 ? (v1/v2).toFixed(2) + ' ≥ 0.70 → CUMPLE' : (v1/v2).toFixed(2) + ' < 0.70 → NO CUMPLE'}` },
+        { problema: "Continuidad vertical", campo1: "N° de pisos con muros continuos", campo2: "N° total de pisos", formula: (v1,v2) => v1 === v2, ok: "✅ Paredes alineadas", mal: "❌ Paredes desalineadas", explicacion: "La carga debe bajar continua", recomendacion: "Alinea los muros verticalmente", refArticulo: "Art. 17", getCalculo: (v1,v2) => `Cálculo: Pisos continuos = ${v1} | Total pisos = ${v2} | ${v1 === v2 ? 'Iguales → CUMPLE' : 'Diferentes → NO CUMPLE'}` },
+        { problema: "Peso excesivo", campo1: "Peso total (toneladas)", campo2: "N° de pisos", formula: (v1,v2) => v1 <= 100 * v2, ok: "✅ Peso controlado", mal: "❌ Demasiado peso", explicacion: "Peso alto aumenta fuerza sísmica", recomendacion: "Reduce peso en pisos superiores", refArticulo: "Art. 18", getCalculo: (v1,v2) => `Cálculo: Peso = ${v1} ton | Máximo permitido = 100 × ${v2} = ${100*v2} ton | ${v1 <= 100*v2 ? v1 + ' ≤ ' + (100*v2) + ' → CUMPLE' : v1 + ' > ' + (100*v2) + ' → NO CUMPLE'}` },
+        { problema: "Forma irregular", campo1: "Lado menor (m)", campo2: "Lado mayor (m)", formula: (v1,v2) => (v1/v2)*100 <= 20, ok: "✅ Forma regular", mal: "❌ Forma irregular", explicacion: "Forma irregular genera torsión", recomendacion: "Divide en bloques regulares con juntas", refArticulo: "Art. 19", getCalculo: (v1,v2) => `Cálculo: Relación = (${v1} / ${v2}) × 100 = ${((v1/v2)*100).toFixed(1)}% | Máximo = 20% | ${((v1/v2)*100) <= 20 ? ((v1/v2)*100).toFixed(1) + '% ≤ 20% → CUMPLE' : ((v1/v2)*100).toFixed(1) + '% > 20% → NO CUMPLE'}` },
+        { problema: "Simetría estructural", campo1: "Rigidez en X", campo2: "Rigidez en Y", formula: (v1,v2) => Math.abs(v1 - v2) <= 0.1, ok: "✅ Simétrica", mal: "❌ Asimétrica", explicacion: "Asimetría causa giro excesivo", recomendacion: "Equilibra rigidez en ambas direcciones", refArticulo: "Art. 20", getCalculo: (v1,v2) => `Cálculo: Diferencia = |${v1} - ${v2}| = ${Math.abs(v1-v2).toFixed(2)} | Máximo = 0.10 | ${Math.abs(v1-v2) <= 0.1 ? Math.abs(v1-v2).toFixed(2) + ' ≤ 0.10 → CUMPLE' : Math.abs(v1-v2).toFixed(2) + ' > 0.10 → NO CUMPLE'}` },
+        { problema: "Tipo de suelo", campo1: "Factor de suelo S (1=S1, 1.05=S2, 1.1=S3)", campo2: "", formula: (v1) => v1 >= 0.8 && v1 <= 1.4, ok: "✅ Suelo estudiado", mal: "⚠️ Revisar suelo", explicacion: "El suelo amplifica el sismo", recomendacion: "Haz estudio de mecánica de suelos", refArticulo: "Art. 21", getCalculo: (v1) => `Cálculo: Factor S = ${v1} | Rango aceptable = 0.80 a 1.40 | ${v1 >= 0.8 && v1 <= 1.4 ? 'Dentro del rango → CUMPLE' : 'Fuera del rango → REVISAR'}` },
+        { problema: "Parapetos", campo1: "Altura parapeto (m)", campo2: "Espesor (m)", formula: (v1,v2) => (v1/v2) <= 1.2, ok: "✅ Parapeto seguro", mal: "❌ Parapeto peligroso", explicacion: "Puede caer en sismo", recomendacion: "Arriostra o reemplaza", refArticulo: "Art. 22", getCalculo: (v1,v2) => `Cálculo: Relación altura/espesor = ${v1} / ${v2} = ${(v1/v2).toFixed(2)} | Máximo = 1.20 | ${(v1/v2) <= 1.2 ? (v1/v2).toFixed(2) + ' ≤ 1.20 → CUMPLE' : (v1/v2).toFixed(2) + ' > 1.20 → NO CUMPLE'}` },
+        { problema: "Redundancia", campo1: "N° de líneas resistentes", campo2: "", formula: (v1) => v1 >= 2, ok: "✅ Redundante", mal: "❌ Poca redundancia", explicacion: "Evita colapso progresivo", recomendacion: "Agrega más ejes resistentes", refArticulo: "Art. 23", getCalculo: (v1) => `Cálculo: Líneas resistentes = ${v1} | Mínimo requerido = 2 | ${v1 >= 2 ? v1 + ' ≥ 2 → CUMPLE' : v1 + ' < 2 → NO CUMPLE'}` },
+        { problema: "Modificaciones", campo1: "¿Modificó sin ingeniero? (1=No, 0=Sí)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Modificación segura", mal: "❌ Modificación riesgosa", explicacion: "Cambios sin supervisión son peligrosos", recomendacion: "Consulta a un especialista", refArticulo: "Art. 24", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'No modificó sin ingeniero → CUMPLE' : 'Modificó sin ingeniero → NO CUMPLE'}` }
+      ]
+    },
+    e050: {
+      code: "E-050", name: "Norma de Suelos", sub: "Mecánica de suelos y cimentaciones", articulo: "Art. 8-12",
+      items: [
+        { problema: "Estudio de suelo", campo1: "¿Tiene estudio de suelo? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Tienes estudio", mal: "❌ Sin estudio de suelo", explicacion: "Necesario para diseñar cimentación", recomendacion: "Contrata un laboratorio de suelos (S/.300-800)", refArticulo: "Art. 8", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Tiene estudio → CUMPLE' : 'No tiene estudio → NO CUMPLE'}` },
+        { problema: "Suelo inadecuado", campo1: "¿Suelo inadecuado? (1=No, 0=Sí)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Suelo adecuado", mal: "❌ Suelo inadecuado", explicacion: "Suelo malo debe reemplazarse", recomendacion: "Reemplaza o estabiliza el terreno", refArticulo: "Art. 9", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Suelo adecuado → CUMPLE' : 'Suelo inadecuado → NO CUMPLE'}` },
+        { problema: "Profundidad cimiento", campo1: "Profundidad del cimiento (m)", campo2: "¿Suelo rocoso? (1=Sí, 0=No)", formula: (v1,v2) => v2 === 1 || v1 >= 0.8, ok: "✅ Profundidad suficiente", mal: "❌ Cimiento superficial", explicacion: "Mínimo 0.8m para suelo blando", recomendacion: "Excava más profundo", refArticulo: "Art. 10", getCalculo: (v1,v2) => `Cálculo: Profundidad = ${v1} m | Mínimo = ${v2 === 1 ? '0.5 m (roca)' : '0.8 m'} | ${(v2 === 1 || v1 >= 0.8) ? 'Cumple mínimo → CUMPLE' : 'No alcanza mínimo → NO CUMPLE'}` },
+        { problema: "Suelo expansivo", campo1: "¿Suelo expansivo? (1=No, 0=Sí)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ No es expansivo", mal: "❌ Suelo expansivo", explicacion: "Se expande con agua y daña cimiento", recomendacion: "Reemplaza o usa cimiento profundo", refArticulo: "Art. 11", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'No expansivo → CUMPLE' : 'Suelo expansivo → NO CUMPLE'}` },
+        { problema: "Suelo colapsable", campo1: "¿Suelo colapsable? (1=No, 0=Sí)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ No es colapsable", mal: "❌ Suelo colapsable", explicacion: "Se hunde al mojarse", recomendacion: "Prehumedece o reemplaza", refArticulo: "Art. 11", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'No colapsable → CUMPLE' : 'Suelo colapsable → NO CUMPLE'}` },
+        { problema: "Ataque químico", campo1: "¿Sulfatos altos? (1=No, 0=Sí)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Sin ataque químico", mal: "⚠️ Ataque químico", explicacion: "Daña el concreto", recomendacion: "Usa cemento Tipo V", refArticulo: "Art. 12", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Sin sulfatos → CUMPLE' : 'Presencia de sulfatos → USAR CEMENTO TIPO V'}` },
+        { problema: "Excavación profunda", campo1: "Profundidad excavación (m)", campo2: "¿Entibado? (1=Sí, 0=No)", formula: (v1,v2) => v1 <= 1.5 || v2 === 1, ok: "✅ Excavación segura", mal: "❌ Riesgo derrumbe", explicacion: "Mayor a 1.5m requiere entibado", recomendacion: "Coloca entibado o talud", refArticulo: "Art. 13", getCalculo: (v1,v2) => `Cálculo: Profundidad = ${v1} m | ${v1 <= 1.5 ? '≤ 1.5m → seguro' : v2 === 1 ? 'Con entibado → seguro' : '>1.5m sin entibado → PELIGRO'}` },
+        { problema: "Talud cercano", campo1: "Distancia a talud (m)", campo2: "¿Estudio geotécnico? (1=Sí, 0=No)", formula: (v1,v2) => v1 >= 5 || v2 === 1, ok: "✅ Distancia segura", mal: "❌ Riesgo deslizamiento", explicacion: "Talud cercano puede fallar", recomendacion: "Aleja o estabiliza talud", refArticulo: "Art. 14", getCalculo: (v1,v2) => `Cálculo: Distancia = ${v1} m | Mínimo = 5 m | ${v1 >= 5 || v2 === 1 ? 'Seguro → CUMPLE' : 'Muy cerca → RIESGO'}` },
+        { problema: "Relleno no controlado", campo1: "¿Hay relleno? (1=No, 0=Sí)", campo2: "Compactación (%)", formula: (v1,v2) => v1 === 1 || v2 >= 90, ok: "✅ Relleno controlado", mal: "❌ Relleno peligroso", explicacion: "Asentamiento diferencial", recomendacion: "Compacta al 90% Proctor", refArticulo: "Art. 15", getCalculo: (v1,v2) => `Cálculo: ${v1 === 1 ? 'Sin relleno → CUMPLE' : 'Compactación = ' + v2 + '% | Mínimo = 90% | ' + (v2 >= 90 ? 'Cumple → CUMPLE' : 'No cumple → PELIGRO')}` },
+        { problema: "Napa freática", campo1: "¿Napa freática cerca? (1=No, 0=Sí)", campo2: "¿Drenaje? (1=Sí, 0=No)", formula: (v1,v2) => v1 === 1 || v2 === 1, ok: "✅ Protegido", mal: "❌ Agua en suelo", explicacion: "Agua debilita capacidad portante", recomendacion: "Instala drenaje profundo", refArticulo: "Art. 16", getCalculo: (v1,v2) => `Cálculo: ${v1 === 1 ? 'Sin napa freática → CUMPLE' : v2 === 1 ? 'Con drenaje → CUMPLE' : 'Napa sin drenaje → PELIGRO'}` }
+      ]
+    },
+    e060: {
+      code: "E-060", name: "Concreto Armado", sub: "Columnas, vigas y losas", articulo: "Art. 10-15",
+      items: [
+        { problema: "Exceso de agua", campo1: "Relación agua/cemento", campo2: "", formula: (v1) => v1 <= 0.6, ok: "✅ Relación correcta", mal: "❌ Exceso de agua", explicacion: "Mucha agua reduce resistencia", recomendacion: "Usa relación a/c ≤ 0.6", refArticulo: "Art. 10", getCalculo: (v1) => `Cálculo: a/c = ${v1} | Máximo = 0.60 | ${v1 <= 0.6 ? v1 + ' ≤ 0.60 → CUMPLE' : v1 + ' > 0.60 → NO CUMPLE'}` },
+        { problema: "Curado insuficiente", campo1: "Días de curado", campo2: "", formula: (v1) => v1 >= 7, ok: "✅ Curado correcto", mal: "❌ Curado insuficiente", explicacion: "Genera grietas y baja resistencia", recomendacion: "Mantén húmedo mínimo 7 días", refArticulo: "Art. 11", getCalculo: (v1) => `Cálculo: Días de curado = ${v1} | Mínimo = 7 días | ${v1 >= 7 ? v1 + ' ≥ 7 → CUMPLE' : v1 + ' < 7 → NO CUMPLE'}` },
+        { problema: "Recubrimiento acero", campo1: "Recubrimiento (cm)", campo2: "", formula: (v1) => v1 >= 4, ok: "✅ Acero protegido", mal: "❌ Acero expuesto", explicacion: "Protege de corrosión", recomendacion: "Usa separadores, mínimo 4cm", refArticulo: "Art. 12", getCalculo: (v1) => `Cálculo: Recubrimiento = ${v1} cm | Mínimo = 4 cm | ${v1 >= 4 ? v1 + ' ≥ 4 → CUMPLE' : v1 + ' < 4 → NO CUMPLE'}` },
+        { problema: "Ganchos estribos", campo1: "Ángulo del gancho (°)", campo2: "", formula: (v1) => v1 >= 135, ok: "✅ Ganchos correctos", mal: "❌ Ganchos incorrectos", explicacion: "Evita apertura en sismo", recomendacion: "Dobla a 135° hacia adentro", refArticulo: "Art. 13", getCalculo: (v1) => `Cálculo: Ángulo = ${v1}° | Mínimo = 135° | ${v1 >= 135 ? v1 + '° ≥ 135° → CUMPLE' : v1 + '° < 135° → NO CUMPLE'}` },
+        { problema: "Estribos en nudos", campo1: "¿Hay estribos en nudos? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Nudos reforzados", mal: "❌ Nudos sin estribos", explicacion: "Zona crítica necesita refuerzo", recomendacion: "Coloca estribos cerrados", refArticulo: "Art. 14", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Con estribos en nudos → CUMPLE' : 'Sin estribos en nudos → NO CUMPLE'}` },
+        { problema: "Traslape correcto", campo1: "¿Traslape correcto? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Traslape correcto", mal: "❌ Traslape incorrecto", explicacion: "Unión deficiente falla", recomendacion: "Longitud ≥ 50 diámetros", refArticulo: "Art. 15", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Traslape correcto → CUMPLE' : 'Traslape incorrecto → NO CUMPLE'}` },
+        { problema: "Acero temperatura", campo1: "¿Malla electrosoldada? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Acero presente", mal: "❌ Falta acero", explicacion: "Evita fisuras en losa", recomendacion: "Coloca malla 6mm @20cm", refArticulo: "Art. 16", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Con malla → CUMPLE' : 'Sin malla de temperatura → NO CUMPLE'}` },
+        { problema: "Altura vaciado", campo1: "Altura de vaciado (m)", campo2: "", formula: (v1) => v1 <= 1.5, ok: "✅ Vaciado controlado", mal: "❌ Vaciado muy alto", explicacion: "Segrega el concreto", recomendacion: "Usa canaleta o bomba", refArticulo: "Art. 17", getCalculo: (v1) => `Cálculo: Altura = ${v1} m | Máximo = 1.5 m | ${v1 <= 1.5 ? v1 + ' ≤ 1.5 → CUMPLE' : v1 + ' > 1.5 → NO CUMPLE'}` },
+        { problema: "Material limpio", campo1: "¿Material limpio? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Material limpio", mal: "❌ Material sucio", explicacion: "Impurezas reducen adherencia", recomendacion: "Lava arena y grava", refArticulo: "Art. 18", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Material limpio → CUMPLE' : 'Material con impurezas → NO CUMPLE'}` },
+        { problema: "Temperatura vaciado", campo1: "Temperatura ambiente (°C)", campo2: "", formula: (v1) => v1 >= 5, ok: "✅ Temperatura adecuada", mal: "❌ Demasiado frío", explicacion: "Frío afecta fraguado", recomendacion: "Protege el concreto con carpas", refArticulo: "Art. 19", getCalculo: (v1) => `Cálculo: Temperatura = ${v1}°C | Mínimo = 5°C | ${v1 >= 5 ? v1 + '°C ≥ 5°C → CUMPLE' : v1 + '°C < 5°C → NO CUMPLE'}` }
+      ]
+    },
+    e070: {
+      code: "E-070", name: "Albañilería", sub: "Muros de ladrillo", articulo: "Art. 12-18",
+      items: [
+        { problema: "Ladrillos huecos", campo1: "% de huecos del ladrillo", campo2: "", formula: (v1) => v1 <= 30, ok: "✅ Ladrillo adecuado", mal: "❌ Ladrillo no portante", explicacion: "Hueco >30% no soporta carga", recomendacion: "Usa ladrillo sólido o ≤30% huecos", refArticulo: "Art. 12", getCalculo: (v1) => `Cálculo: % huecos = ${v1}% | Máximo = 30% | ${v1 <= 30 ? v1 + '% ≤ 30% → CUMPLE' : v1 + '% > 30% → NO CUMPLE'}` },
+        { problema: "Espesor muro", campo1: "Espesor del muro (cm)", campo2: "", formula: (v1) => v1 >= 12, ok: "✅ Espesor correcto", mal: "❌ Muro muy delgado", explicacion: "Falla por esbeltez", recomendacion: "Mínimo 12cm para muros portantes", refArticulo: "Art. 13", getCalculo: (v1) => `Cálculo: Espesor = ${v1} cm | Mínimo = 12 cm | ${v1 >= 12 ? v1 + ' ≥ 12 → CUMPLE' : v1 + ' < 12 → NO CUMPLE'}` },
+        { problema: "Tuberías empotradas", campo1: "Diámetro tubería (mm)", campo2: "", formula: (v1) => v1 <= 55, ok: "✅ Tubería permitida", mal: "❌ Tubería muy grande", explicacion: "Debilita el muro", recomendacion: "Usa ductos o falsas columnas", refArticulo: "Art. 14", getCalculo: (v1) => `Cálculo: Diámetro = ${v1} mm | Máximo = 55 mm | ${v1 <= 55 ? v1 + ' ≤ 55 → CUMPLE' : v1 + ' > 55 → NO CUMPLE'}` },
+        { problema: "Altura por día", campo1: "Altura construida (m/día)", campo2: "", formula: (v1) => v1 <= 1.3, ok: "✅ Ritmo adecuado", mal: "❌ Construcción rápida", explicacion: "Mucha altura deforma juntas", recomendacion: "Máximo 1.30 m por día", refArticulo: "Art. 15", getCalculo: (v1) => `Cálculo: Altura/día = ${v1} m | Máximo = 1.30 m | ${v1 <= 1.3 ? v1 + ' ≤ 1.30 → CUMPLE' : v1 + ' > 1.30 → NO CUMPLE'}` },
+        { problema: "Ladrillos secos", campo1: "¿Humedeciste ladrillos? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Ladrillos humedecidos", mal: "❌ Ladrillos secos", explicacion: "Absorben agua del mortero", recomendacion: "Humedecer 24h antes", refArticulo: "Art. 16", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Ladrillos humedecidos → CUMPLE' : 'Ladrillos secos → NO CUMPLE'}` },
+        { problema: "Espesor juntas", campo1: "Espesor junta (mm)", campo2: "", formula: (v1) => v1 >= 10 && v1 <= 15, ok: "✅ Junta correcta", mal: "❌ Junta incorrecta", explicacion: "Debilita el muro", recomendacion: "Mantener entre 10 y 15 mm", refArticulo: "Art. 17", getCalculo: (v1) => `Cálculo: Junta = ${v1} mm | Rango = 10-15 mm | ${v1 >= 10 && v1 <= 15 ? v1 + ' mm en rango → CUMPLE' : v1 + ' mm fuera de rango → NO CUMPLE'}` },
+        { problema: "Secuencia muro-columna", campo1: "¿Muro antes que columna? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Secuencia correcta", mal: "❌ Secuencia incorrecta", explicacion: "Columna sin muro no confina", recomendacion: "Construir muro antes de columna", refArticulo: "Art. 18", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Muro antes que columna → CUMPLE' : 'Columna primero → NO CUMPLE'}` },
+        { problema: "Conexión muro-columna", campo1: "¿Hay dentado? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Bien conectado", mal: "❌ Sin amarre", explicacion: "Se separa en sismo", recomendacion: "Usar dentado o chicotes cada 50cm", refArticulo: "Art. 18", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Con dentado → CUMPLE' : 'Sin dentado → NO CUMPLE'}` },
+        { problema: "Continuidad vertical", campo1: "¿Muros alineados? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Muros continuos", mal: "❌ Piso blando", explicacion: "Piso blando colapsa", recomendacion: "Mantener muros alineados", refArticulo: "Art. 19", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Muros alineados → CUMPLE' : 'Muros desalineados → NO CUMPLE'}` },
+        { problema: "Densidad de muros", campo1: "Densidad de muros (%)", campo2: "", formula: (v1) => v1 >= 6, ok: "✅ Densidad suficiente", mal: "❌ Pocos muros", explicacion: "Baja resistencia sísmica", recomendacion: "Agregar muros o placas", refArticulo: "Art. 20", getCalculo: (v1) => `Cálculo: Densidad = ${v1}% | Mínimo = 6% | ${v1 >= 6 ? v1 + '% ≥ 6% → CUMPLE' : v1 + '% < 6% → NO CUMPLE'}` }
+      ]
+    },
+    e080: {
+      code: "E-080", name: "Adobe", sub: "Construcción tradicional", articulo: "Art. 10-15",
+      items: [
+        { problema: "Exceso de altura", campo1: "Número de pisos", campo2: "", formula: (v1) => v1 <= 2, ok: "✅ Altura correcta", mal: "❌ Demasiados pisos", explicacion: "Adobe no soporta más de 2 pisos", recomendacion: "Usa materiales livianos en tercer nivel", refArticulo: "Art. 10", getCalculo: (v1) => `Cálculo: Pisos = ${v1} | Máximo = 2 | ${v1 <= 2 ? v1 + ' ≤ 2 → CUMPLE' : v1 + ' > 2 → NO CUMPLE'}` },
+        { problema: "Suelo inadecuado", campo1: "¿Suelo firme? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Suelo adecuado", mal: "❌ Suelo inadecuado", explicacion: "Suelo blando falla", recomendacion: "Construir en suelo firme y seco", refArticulo: "Art. 11", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Suelo firme → CUMPLE' : 'Suelo blando → NO CUMPLE'}` },
+        { problema: "Viga solera", campo1: "¿Tiene viga solera? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Con viga solera", mal: "❌ Sin viga solera", explicacion: "Sin amarre se separan", recomendacion: "Colocar viga solera obligatoria", refArticulo: "Art. 12", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Con viga solera → CUMPLE' : 'Sin viga solera → NO CUMPLE'}` },
+        { problema: "Calidad del adobe", campo1: "Resistencia (kg/cm²)", campo2: "", formula: (v1) => v1 >= 10 && v1 <= 20, ok: "✅ Calidad aceptable", mal: "❌ Mala calidad", explicacion: "Mala mezcla reduce resistencia", recomendacion: "Proporción 1:3:1", refArticulo: "Art. 13", getCalculo: (v1) => `Cálculo: Resistencia = ${v1} kg/cm² | Rango = 10-20 | ${v1 >= 10 && v1 <= 20 ? 'En rango → CUMPLE' : 'Fuera de rango → NO CUMPLE'}` },
+        { problema: "Esbeltez muro", campo1: "Relación altura/espesor", campo2: "", formula: (v1) => v1 <= 10, ok: "✅ Proporción correcta", mal: "❌ Muro inestable", explicacion: "Muy alto se vuelve inestable", recomendacion: "Refuerzo o aumentar espesor", refArticulo: "Art. 14", getCalculo: (v1) => `Cálculo: Altura/Espesor = ${v1} | Máximo = 10 | ${v1 <= 10 ? v1 + ' ≤ 10 → CUMPLE' : v1 + ' > 10 → NO CUMPLE'}` },
+        { problema: "Tamaño vanos", campo1: "Ancho vano / largo muro (%)", campo2: "", formula: (v1) => v1 <= 33, ok: "✅ Vanos correctos", mal: "❌ Vanos grandes", explicacion: "Debilitan el muro", recomendacion: "Reducir tamaño y centrar", refArticulo: "Art. 15", getCalculo: (v1) => `Cálculo: Vanos = ${v1}% | Máximo = 33% | ${v1 <= 33 ? v1 + '% ≤ 33% → CUMPLE' : v1 + '% > 33% → NO CUMPLE'}` },
+        { problema: "Sobrecimiento", campo1: "Altura sobrecimiento (cm)", campo2: "", formula: (v1) => v1 >= 20, ok: "✅ Protegido", mal: "❌ Muy bajo", explicacion: "Humedad destruye el adobe", recomendacion: "Elevar base mínimo 20 cm", refArticulo: "Art. 16", getCalculo: (v1) => `Cálculo: Sobrecimiento = ${v1} cm | Mínimo = 20 cm | ${v1 >= 20 ? v1 + ' ≥ 20 → CUMPLE' : v1 + ' < 20 → NO CUMPLE'}` },
+        { problema: "Refuerzo esquinas", campo1: "¿Refuerzo en esquinas? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Esquinas reforzadas", mal: "❌ Sin refuerzo", explicacion: "Esquinas fallan primero", recomendacion: "Refuerzo con caña o malla", refArticulo: "Art. 17", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Con refuerzo → CUMPLE' : 'Sin refuerzo → NO CUMPLE'}` },
+        { problema: "Peso del techo", campo1: "¿Techo liviano? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Techo liviano", mal: "❌ Techo pesado", explicacion: "Genera empujes laterales", recomendacion: "Usa calamina o teja liviana", refArticulo: "Art. 18", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Techo liviano → CUMPLE' : 'Techo pesado → NO CUMPLE'}` },
+        { problema: "Forma de planta", campo1: "¿Planta simétrica? (1=Sí, 0=No)", campo2: "", formula: (v1) => v1 === 1, ok: "✅ Planta regular", mal: "❌ Planta irregular", explicacion: "Torsiona en sismo", recomendacion: "Diseñar planta simétrica", refArticulo: "Art. 19", getCalculo: (v1) => `Cálculo: ${v1 === 1 ? 'Planta simétrica → CUMPLE' : 'Planta irregular → NO CUMPLE'}` }
+      ]
+    }
+  };
+
+  // ======================== LÓGICA DE RENDERIZADO ========================
+  let currentTab = "e030";
+
+  function render() {
+    const container = document.getElementById("mainContent");
+    const tabData = normasData[currentTab];
+    if (!tabData) return;
+
+    let html = `<div style="background:#0B2F4E; border-radius:24px; padding:12px 18px; margin-bottom:6px; color:white;">
+                  <div style="font-weight:800; font-family:'Manrope';">${tabData.code} · ${tabData.name}</div>
+                  <div style="font-size:12px; opacity:0.8;">${tabData.sub} | ${tabData.articulo}</div>
+                </div>`;
+
+    tabData.items.forEach((item, idx) => {
+      const iconos = ["🏗️","🪨","📐","⚖️","🔲","🔄","🌍","🧱","🔧","⚠️"];
+      const fondos = ["#EFF6FF","#F0FDF4","#FEF9C3","#F0FDF4","#FEF3C7","#EFF6FF","#FDF2F8","#FFF7ED","#F0F9FF","#FEF2F2"];
+
+      html += `
+        <div class="card" data-idx="${idx}">
+          <div class="card-header">
+            <div class="card-icon" style="background:${fondos[idx % fondos.length]};">${iconos[idx % iconos.length]}</div>
+            <div class="card-title-box">
+              <div class="card-title">${item.problema}</div>
+              <div class="card-question">Verifica este punto</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="input-group">
+              <div class="input-label">📊 ${item.campo1}</div>
+              <input class="input-num" type="number" step="any" placeholder="Ingresa el valor" data-idx="${idx}" data-field="1" id="in1_${idx}">
+              <div class="error-msg" id="err1_${idx}">⚠️ Ingresa un número mayor a 0</div>
+            </div>
+            ${item.campo2 ? `
+            <div class="input-group" style="margin-top:12px;">
+              <div class="input-label">📊 ${item.campo2}</div>
+              <input class="input-num" type="number" step="any" placeholder="Ingresa el valor" data-idx="${idx}" data-field="2" id="in2_${idx}">
+              <div class="error-msg" id="err2_${idx}">⚠️ Ingresa un número mayor a 0</div>
+            </div>
+            ` : ''}
+            <div class="result-box" id="res_${idx}">
+              <div class="result-top">
+                <span class="result-img" id="res_img_${idx}"></span>
+                <span class="result-titulo" id="res_tit_${idx}"></span>
+              </div>
+              <div class="result-desc" id="res_desc_${idx}"></div>
+              <div class="calculo-paso" id="calculo_${idx}"></div>
+              <div class="recomendacion" id="recom_${idx}"></div>
+              <div class="referencia" id="ref_${idx}"></div>
+              <div class="analogy">💡 ${getAnalogy(currentTab, idx)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+
+    // Agregar event listeners
+    tabData.items.forEach((item, idx) => {
+      const input1 = document.getElementById(`in1_${idx}`);
+      const input2 = document.getElementById(`in2_${idx}`);
+      const error1 = document.getElementById(`err1_${idx}`);
+      const error2 = document.getElementById(`err2_${idx}`);
+
+      const validarNumero = (valor, errorEl) => {
+        if (valor === "" || valor === null) return false;
+        const num = parseFloat(valor);
+        if (isNaN(num) || num <= 0) {
+          errorEl.classList.add("show");
+          return false;
+        }
+        errorEl.classList.remove("show");
+        return true;
+      };
+
+      const evaluar = () => {
+        const v1ok = validarNumero(input1?.value, error1);
+        let v2ok = true;
+        let v1 = parseFloat(input1?.value);
+        let v2 = null;
+
+        if (item.campo2) {
+          v2ok = validarNumero(input2?.value, error2);
+          v2 = parseFloat(input2?.value);
+        }
+
+        if (!v1ok || (item.campo2 && !v2ok)) {
+          const resBox = document.getElementById(`res_${idx}`);
+          resBox.classList.remove("show");
+          return;
+        }
+
+        let ok = false;
+        if (item.campo2) {
+          ok = item.formula(v1, v2);
+        } else {
+          ok = item.formula(v1);
+        }
+
+        const resBox = document.getElementById(`res_${idx}`);
+        resBox.className = `result-box show ${ok ? 'ok' : 'mal'}`;
+        document.getElementById(`res_img_${idx}`).innerHTML = ok ? '✅' : '❌';
+        document.getElementById(`res_tit_${idx}`).innerHTML = ok ? item.ok : item.mal;
+        document.getElementById(`res_desc_${idx}`).innerHTML = item.explicacion;
+        document.getElementById(`calculo_${idx}`).innerHTML = item.getCalculo(v1, v2);
+        document.getElementById(`recom_${idx}`).innerHTML = `🔧 RECOMENDACIÓN: ${item.recomendacion}`;
+        document.getElementById(`ref_${idx}`).innerHTML = `📖 REFERENCIA: RNE ${tabData.code} ${item.refArticulo}`;
+      };
+
+      if (input1) input1.addEventListener('input', evaluar);
+      if (input2) input2.addEventListener('input', evaluar);
+    });
+  }
+
+  function getAnalogy(tab, idx) {
+    const analogies = {
+      e030: ["Separa tu negocio de la competencia", "La base débil colapsa primero", "Alinea tus decisiones", "Controla el peso de tus gastos", "Forma simple = negocio claro", "Equilibrio estratégico", "Conoce tu mercado", "Asegura lo que sobresale", "Ten plan B", "Cambios con asesoría"],
+      e050: ["Conoce el terreno antes de invertir", "Elige suelo firme para tu negocio", "Profundiza en tu propuesta", "Evita expansiones riesgosas", "No construyas sobre arena", "Protege contra ataques externos", "Seguridad en cada capa", "Alejate del peligro", "Compacta bien tu estructura", "Controla el agua en tu negocio"],
+      e060: ["La medida exacta importa", "La constancia da resultados", "Protege tu activo principal", "Los detalles salvan", "Refuerza los puntos críticos", "Las uniones deben ser fuertes", "No ahorres en lo esencial", "Controla la altura de tus metas", "Limpieza en el proceso", "Ambiente adecuado para crecer"],
+      e070: ["Calidad sobre apariencia", "El grosor da solidez", "Las tuberías deben ir por fuera", "No corras, avanza firme", "Prepara antes de actuar", "Precisión en las juntas", "Orden en el proceso", "Amarra tus decisiones", "Consistencia vertical", "Cantidad también importa"],
+      e080: ["Respeta tus límites", "Base firme para crecer", "Amarra tus valores", "Calidad en los materiales", "Proporciones correctas", "No debilites tu estructura", "Protégete de la humedad", "Refuerza las esquinas", "Menos peso, más altura", "Simetría en tus planes"]
+    };
+    return analogies[tab]?.[idx] || "Persistencia + propósito = éxito";
+  }
+
+  function switchTab(tabId, el) {
+    currentTab = tabId;
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("on"));
+    if (el) el.classList.add("on");
+    render();
+  }
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", (e) => {
+      const tabVal = tab.getAttribute("data-tab");
+      switchTab(tabVal, tab);
+    });
+  });
+
+  render();
+</script>
+</body>
+</html>
